@@ -147,19 +147,6 @@ def predict(current_user):
         "confidence": confidence
     })
 
-@GetMapping("/recent-threats")
-public ResponseEntity<?> getRecentThreats(@RequestHeader("Authorization") String authHeader) {
-    String token = authHeader.replace("Bearer ", "");
-    if (!isAdmin(token)) return ResponseEntity.status(403).body("Access denied");
-
-    // Example hardcoded threat predictions
-    List<ThreatPrediction> threats = List.of(
-        new ThreatPrediction("Suspicious login detected", "Phishing", 92.4, "2025-05-21 10:30"),
-        new ThreatPrediction("High traffic on port 445", "DDoS", 88.2, "2025-05-21 09:50")
-    );
-
-    return ResponseEntity.ok(threats);
-}
 
 
 if __name__ == '__main__':
