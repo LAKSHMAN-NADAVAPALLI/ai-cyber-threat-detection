@@ -1,0 +1,157 @@
+/* Reset and base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Reset and base only for AuthPage */
+.auth-page *,
+.auth-page *::before,
+.auth-page *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Auth Page Container with background */
+.auth-page {
+  background: linear-gradient(to right, #ff6a00, #ee0979);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* Auth Page Container */
+.auth-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* Main Box */
+.auth-box {
+  display: flex;
+  width: 950px;
+  height: 550px;
+  background-color: #fff;
+  border-radius: 25px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Left Side Panel */
+.auth-left-panel {
+  flex: 1;
+  background: linear-gradient(to bottom right, #ff416c, #ff4b2b);
+  color: #fff;
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.4s ease;
+}
+
+.auth-left-panel h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.auth-left-panel p {
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.auth-left-panel button {
+  padding: 12px 30px;
+  border: 2px solid #fff;
+  background-color: transparent;
+  color: #fff;
+  font-size: 1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.auth-left-panel button:hover {
+  background-color: #fff;
+  color: #ff416c;
+}
+
+/* Right Side Panel */
+.auth-right-panel {
+  flex: 1;
+  padding: 60px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  animation: slideIn 0.6s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.auth-right-panel h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 25px;
+}
+
+.auth-right-panel form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth-right-panel input {
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border 0.3s ease;
+}
+
+.auth-right-panel input:focus {
+  border-color: #ff6a00;
+  outline: none;
+}
+
+.auth-right-panel button {
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background-color: #ff6a00;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.auth-right-panel button:hover {
+  background-color: #e65c00;
+}
+
+/* Message */
+.auth-msg {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  color: #333;
+  text-align: center;
+}

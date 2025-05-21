@@ -1,0 +1,124 @@
+.analyzeContainer {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 4rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 100%;
+  max-width: 100%;
+}
+
+.analyzeHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.analyzeTitle {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #ff6b6b;
+}
+
+.analyzeLogoutButton {
+  background-color: #ff6b6b;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.analyzeLogoutButton:hover {
+  background-color: #ff4c4c;
+}
+
+.analyzeCard {
+  width: 100%;
+  max-width: 1200px;
+  background-color: #333333;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.analyzeSectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #ff6b6b;
+}
+
+.analyzeTextarea {
+  width: 100%;
+  height: 200px;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  resize: vertical;
+  font-size: 1rem;
+  background-color: #444444;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.analyzeAnalyzeButton {
+  background-color: #2563eb;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.analyzeAnalyzeButton:hover {
+  background-color: #1d4ed8;
+}
+
+.analyzeLoadingText {
+  color: #a1a1aa;
+  margin-top: 0.5rem;
+}
+
+.analyzeResult {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: #1e293b;
+  border-radius: 0.5rem;
+  color: #ffffff;
+}
+
+.analyzeError {
+  color: #f87171;
+  font-weight: bold;
+}
+
+.analyzePrediction {
+  font-size: 1.1rem;
+  color: #22c55e;
+}
+
+.analyzeThreatsBox {
+  margin-top: 1rem;
+}
+
+.analyzeThreatsBox ul {
+  padding-left: 1.5rem;
+  list-style: none;
+}
+
+.analyzeThreatsBox li {
+  margin-bottom: 0.25rem;
+}
+
+.analyzeConfidence {
+  margin-top: 0.5rem;
+  color: #94a3b8;
+}

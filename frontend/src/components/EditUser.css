@@ -1,0 +1,45 @@
+.edit-user-container {
+  padding: 30px;
+  max-width: 600px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.edit-user-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-user-field {
+  margin-bottom: 20px;
+}
+
+.edit-user-field label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.edit-user-field input,
+.edit-user-field select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.edit-user-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.edit-user-button:hover {
+  background-color: #0056b3;
+}

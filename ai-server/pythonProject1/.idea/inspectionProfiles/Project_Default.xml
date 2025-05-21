@@ -1,0 +1,18 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="smsproject.facultyapp.models.Course" />
+          <option value="smsproject.facultyapp.models.Admin" />
+          <option value="smsproject.facultyapp.models.Student" />
+          <option value="smsproject.facultyapp.models.Faculty" />
+          <option value="smsproject.facultyapp.models.faculty" />
+          <option value="smsproject.adminapp.models.aculty" />
+          <option value="smsproject.smsproject.views.Admin" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

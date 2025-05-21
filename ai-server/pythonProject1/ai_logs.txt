@@ -1,0 +1,13 @@
+2025-04-11 12:03:27,648 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-11 12:03:27,649 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-11 12:03:37,430 - INFO - Received: hello | Prediction: \u2705 No known threats detected in the input.
+2025-04-11 12:03:37,431 - INFO - 127.0.0.1 - - [11/Apr/2025 12:03:37] "POST /predict HTTP/1.1" 200 -
+2025-04-11 12:03:38,642 - INFO - Received: hello | Prediction: \u2705 No known threats detected in the input.
+2025-04-11 12:03:38,643 - INFO - 127.0.0.1 - - [11/Apr/2025 12:03:38] "POST /predict HTTP/1.1" 200 -
+2025-04-11 12:03:57,483 - INFO - Received: hello again | Prediction: \u2705 No known threats detected in the input.
+2025-04-11 12:03:57,485 - INFO - 127.0.0.1 - - [11/Apr/2025 12:03:57] "POST /predict HTTP/1.1" 200 -
+2025-04-11 12:05:01,890 - INFO - Received: https://nadavapalli-lakshman-online-job-portal-using-react-lapy.vercel.app/ | Prediction: \u2705 No known threats detected in the input.
+2025-04-11 12:05:01,891 - INFO - 127.0.0.1 - - [11/Apr/2025 12:05:01] "POST /predict HTTP/1.1" 200 -
+2025-04-11 12:05:03,051 - INFO - Received: https://nadavapalli-lakshman-online-job-portal-using-react-lapy.vercel.app/ | Prediction: \u2705 No known threats detected in the input.
+2025-04-11 12:05:03,051 - INFO - 127.0.0.1 - - [11/Apr/2025 12:05:03] "POST /predict HTTP/1.1" 200 -
