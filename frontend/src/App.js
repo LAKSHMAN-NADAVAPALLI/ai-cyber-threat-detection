@@ -20,6 +20,7 @@ function App() {
 
   useEffect(() => {
     // simulate async auth loading
+     document.title = "CyberShield AI";
     const token = localStorage.getItem('token');
     const userRole = localStorage.getItem('role')?.toUpperCase();
 
