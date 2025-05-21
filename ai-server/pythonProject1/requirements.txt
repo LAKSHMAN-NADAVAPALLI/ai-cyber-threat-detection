@@ -6,3 +6,4 @@ python-dotenv==0.19.2
 bcrypt==3.2.0
 pyjwt==2.3.0
 gunicorn==21.2.0
+Werkzeug==2.0.3
