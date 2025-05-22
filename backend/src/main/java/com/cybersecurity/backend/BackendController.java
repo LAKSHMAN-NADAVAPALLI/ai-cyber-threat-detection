@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000","nadavapalli-lakshman-ai-cyber-threat-detection.vercel.app"})
 @RestController
 public class BackendController {
 
@@ -22,7 +22,7 @@ public class BackendController {
     @GetMapping("/ai-test")
     public String callAIServer() {
         RestTemplate restTemplate = new RestTemplate();
-        String aiUrl = "http://localhost:5000/test";
+        String aiUrl = "https://ai-cyber-threat-detection.onrender.com/test";
         ResponseEntity<String> response = restTemplate.getForEntity(aiUrl, String.class);
         return "Response from AI: " + response.getBody();
     }
@@ -37,7 +37,7 @@ public class BackendController {
             System.out.println("🔐 Received Token: " + authHeader);
 
             RestTemplate restTemplate = new RestTemplate();
-            String aiUrl = "http://localhost:5000/predict";
+            String aiUrl = "https://ai-cyber-threat-detection.onrender.com/predict";
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);

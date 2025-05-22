@@ -9,7 +9,10 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000")
+        .allowedOrigins(
+                "http://localhost:3000",
+                "https://nadavapalli-lakshman-ai-cyber-threat-detection.vercel.app"
+            )
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*")
                 .exposedHeaders("Authorization") // ✅ This makes JWT accessible in frontend
