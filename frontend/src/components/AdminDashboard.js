@@ -30,7 +30,7 @@ const AdminDashboard = () => {
     document.title = "Admin | Dashboard";
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/admin/users", {
+        const response = await axios.get("https://backend-edwk.onrender.com/api/admin/users", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setAllUsers(response.data);
@@ -53,7 +53,7 @@ const AdminDashboard = () => {
 
   // ✅ Fetch recent threats on mount
   useEffect(() => {
-    fetch("http://localhost:8080/api/admin/recent-threats", {
+    fetch("https://backend-edwk.onrender.com/api/admin/recent-threats", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }
@@ -78,7 +78,7 @@ const AdminDashboard = () => {
   const handleDeleteUser = async (id) => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
     try {
-      await axios.delete(`http://localhost:8080/api/admin/delete/users/${id}`, {
+      await axios.delete(`https://backend-edwk.onrender.com/api/admin/delete/users/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

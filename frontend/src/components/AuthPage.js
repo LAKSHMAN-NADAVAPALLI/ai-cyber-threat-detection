@@ -19,8 +19,8 @@ const AuthPage = ({ onLoginSuccess }) => {
     e.preventDefault();
 
     const endpoint = isLogin
-      ? 'http://localhost:8080/api/auth/login'
-      : 'http://localhost:8080/api/auth/register';
+      ? 'https://backend-edwk.onrender.com/api/auth/login'
+      : 'https://backend-edwk.onrender.com/api/auth/register';
 
     const payload = isLogin ? { email, password } : { name, email, password };
 

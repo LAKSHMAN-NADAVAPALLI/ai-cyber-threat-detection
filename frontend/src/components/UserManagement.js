@@ -15,7 +15,7 @@ const UserManagement = () => {
     document.title = "User Management | Admin";
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/admin/users", {
+        const response = await axios.get("https://backend-edwk.onrender.com/api/admin/users", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setAllUsers(response.data);
@@ -47,7 +47,7 @@ const UserManagement = () => {
   const handleDeleteUser = async (id) => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
     try {
-      await axios.delete(`http://localhost:8080/api/admin/delete/users/${id}`, {
+      await axios.delete(`https://backend-edwk.onrender.com/api/admin/delete/users/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

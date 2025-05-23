@@ -30,7 +30,7 @@ const EditUser = () => {
       try {
         console.log('📡 Fetching user list for ID:', id);
 
-        const response = await axios.get('http://localhost:8080/api/admin/users', {
+        const response = await axios.get('https://backend-edwk.onrender.com/api/admin/users', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -84,7 +84,7 @@ const EditUser = () => {
 
     try {
       const res = await axios.put(
-        `http://localhost:8080/api/admin/users/${id}`,
+        `https://backend-edwk.onrender.com/api/admin/users/${id}`,
         formData,
         {
           headers: {

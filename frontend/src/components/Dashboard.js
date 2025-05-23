@@ -10,7 +10,7 @@ const Dashboard = () => {
     const fetchUserData = async () => {
       const token = localStorage.getItem('token');
       try {
-        const response = await axios.get('http://localhost:5000/test', {
+        const response = await axios.get('https://ai-cyber-threat-detection.onrender.com/test', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
