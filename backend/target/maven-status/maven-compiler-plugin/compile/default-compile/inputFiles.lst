@@ -10,6 +10,7 @@ C:\Users\91934\OneDrive\ai-cyber-threat-detection\backend\src\main\java\com\cybe
 C:\Users\91934\OneDrive\ai-cyber-threat-detection\backend\src\main\java\com\cybersecurity\backend\AdminController.java
 C:\Users\91934\OneDrive\ai-cyber-threat-detection\backend\src\main\java\com\cybersecurity\backend\JwtUtil.java
 C:\Users\91934\OneDrive\ai-cyber-threat-detection\backend\src\main\java\com\cybersecurity\backend\SecurityConfig.java
+C:\Users\91934\OneDrive\ai-cyber-threat-detection\backend\src\main\java\com\cybersecurity\backend\EnvironmentLogger.java
 C:\Users\91934\OneDrive\ai-cyber-threat-detection\backend\src\main\java\com\cybersecurity\backend\ThreatData.java
 C:\Users\91934\OneDrive\ai-cyber-threat-detection\backend\src\main\java\com\cybersecurity\backend\BackendApplication.java
 C:\Users\91934\OneDrive\ai-cyber-threat-detection\backend\src\main\java\com\cybersecurity\backend\Notification.java
@@ -19,3 +20,4 @@ C:\Users\91934\OneDrive\ai-cyber-threat-detection\backend\src\main\java\com\cybe
 C:\Users\91934\OneDrive\ai-cyber-threat-detection\backend\src\main\java\com\cybersecurity\backend\AuthRequest.java
 C:\Users\91934\OneDrive\ai-cyber-threat-detection\backend\src\main\java\com\cybersecurity\backend\JwtAuthFilter.java
 C:\Users\91934\OneDrive\ai-cyber-threat-detection\backend\src\main\java\com\cybersecurity\backend\UserRepository.java
+C:\Users\91934\OneDrive\ai-cyber-threat-detection\backend\src\main\java\com\cybersecurity\backend\MongoConfigLogger.java

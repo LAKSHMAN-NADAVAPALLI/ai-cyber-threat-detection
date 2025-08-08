@@ -127,8 +127,15 @@
   <dependency>
     <groupId>org.glassfish.jaxb</groupId>
     <artifactId>jaxb-runtime</artifactId>
-    <version>2.3.0</version>
+    <version>4.0.5</version>
   </dependency>
+<!-- For Maven -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-mongodb</artifactId>
+    <version>3.1.0</version> <!-- or a version that matches your Spring Boot version -->
+</dependency>
+
 
   </dependencies>
 

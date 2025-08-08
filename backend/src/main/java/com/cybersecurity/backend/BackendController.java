@@ -10,7 +10,15 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.Map;
 
-@CrossOrigin(origins = {"http://localhost:3000","nadavapalli-lakshman-ai-cyber-threat-detection.vercel.app"})
+@CrossOrigin(
+		  origins = {
+		    "http://localhost:3000",
+		    "https://nadavapalli-lakshman-ai-cyber-threat-detection.vercel.app"
+		  },
+		  allowedHeaders = "*",
+		  exposedHeaders = "Authorization"
+		)
+
 @RestController
 public class BackendController {
 

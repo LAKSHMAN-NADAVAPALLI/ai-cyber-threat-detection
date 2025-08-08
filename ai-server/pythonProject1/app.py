@@ -90,62 +90,62 @@ def test():
 
 @app.route('/predict', methods=['POST'])
 @token_required
-
-
 def predict(current_user):
     import re
+    logging.info("✅ /predict endpoint hit.")
 
-    print("✅ /predict endpoint hit.")
-    data = request.get_json()
-    print("📦 Data received:", data)
+    try:
+        data = request.get_json()
+        logging.info("📦 Data received: %s", data)
 
-    user_input = data.get("input", "").lower()
+        if not data or 'input' not in data:
+            return jsonify({"error": "Missing 'input' field in JSON"}), 400
 
-    if not user_input:
-        return jsonify({"error": "Missing input field"}), 400
+        user_input = data['input'].lower()
 
-    # Normalize and clean input
-    cleaned_input = re.sub(r'[^\w\s]', '', user_input)
-    tokens = set(cleaned_input.split())
+        cleaned_input = re.sub(r'[^\w\s]', '', user_input)
+        tokens = set(cleaned_input.split())
 
-    # Mapping of threats to their variants/synonyms/phrases
-    threat_patterns = {
-        "malware": [r"\bmalware\b", r"\bmalicious software\b"],
-        "phishing": [r"\bphishing\b", r"\bphishing email\b"],
-        "ddos": [r"\bddos\b", r"\bdenial of service\b", r"\bflood attack\b"],
-        "exploit": [r"\bexploit\b", r"\bvulnerability exploited\b"],
-        "ransomware": [r"\bransomware\b", r"\bdata encrypted\b"],
-        "virus": [r"\bvirus\b", r"\binfected system\b"],
-        "trojan": [r"\btrojan\b", r"\btrojan horse\b"],
-        "botnet": [r"\bbotnet\b", r"\bnetwork of bots\b"],
-        "backdoor": [r"\bbackdoor\b", r"\bunauthorized access\b"],
-        "spyware": [r"\bspyware\b", r"\btracking software\b"],
-        "keylogger": [r"\bkeylogger\b", r"\bkeystroke logger\b"]
-    }
+        threat_patterns = {
+            "malware": [r"\bmalware\b", r"\bmalicious software\b"],
+            "phishing": [r"\bphishing\b", r"\bphishing email\b"],
+            "ddos": [r"\bddos\b", r"\bdenial of service\b", r"\bflood attack\b"],
+            "exploit": [r"\bexploit\b", r"\bvulnerability exploited\b"],
+            "ransomware": [r"\bransomware\b", r"\bdata encrypted\b"],
+            "virus": [r"\bvirus\b", r"\binfected system\b"],
+            "trojan": [r"\btrojan\b", r"\btrojan horse\b"],
+            "botnet": [r"\bbotnet\b", r"\bnetwork of bots\b"],
+            "backdoor": [r"\bbackdoor\b", r"\bunauthorized access\b"],
+            "spyware": [r"\bspyware\b", r"\btracking software\b"],
+            "keylogger": [r"\bkeylogger\b", r"\bkeystroke logger\b"]
+        }
 
-    found_threats = []
+        found_threats = []
 
-    # Match input against threat patterns
-    for threat, patterns in threat_patterns.items():
-        for pattern in patterns:
-            if re.search(pattern, user_input):
-                found_threats.append(threat)
-                break  # Avoid duplicates
+        for threat, patterns in threat_patterns.items():
+            for pattern in patterns:
+                if re.search(pattern, user_input):
+                    found_threats.append(threat)
+                    break
 
-    if found_threats:
-        prediction = f"⚠ Potential Threat Detected: {', '.join(set(found_threats))}"
-        confidence = round(0.3 + 0.01 * len(found_threats), 2)  # Confidence increases with more threats
-    else:
-        prediction = "✅ No known threats detected in the input."
-        confidence = round(0.9 + 0.01 * len(found_threats), 2)
+        if found_threats:
+            prediction = f"⚠ Potential Threat Detected: {', '.join(set(found_threats))}"
+            confidence = round(0.3 + 0.01 * len(found_threats), 2)
+        else:
+            prediction = "✅ No known threats detected in the input."
+            confidence = round(0.9 + 0.01 * len(found_threats), 2)
 
-    logging.info(f"Received: {user_input} | Prediction: {prediction}")
+        logging.info(f"📊 Prediction: {prediction} | Confidence: {confidence}")
 
-    return jsonify({
-        "prediction": prediction,
-        "found_threats": list(set(found_threats)),
-        "confidence": confidence
-    })
+        return jsonify({
+            "prediction": prediction,
+            "found_threats": list(set(found_threats)),
+            "confidence": confidence
+        })
+
+    except Exception as e:
+        logging.exception("❌ Error in /predict route")
+        return jsonify({"error": "Internal server error"}), 500
 
 
 

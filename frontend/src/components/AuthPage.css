@@ -1,84 +1,62 @@
-/* Reset and base */
+/* Reset */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* Reset and base only for AuthPage */
-.auth-page *,
-.auth-page *::before,
-.auth-page *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/* Auth Page Container with background */
 .auth-page {
-  background: linear-gradient(to right, #ff6a00, #ee0979);
+  background: #ff4b2b;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-
-/* Auth Page Container */
-.auth-page {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
-
-/* Main Box */
 .auth-box {
+  contain: layout;
   display: flex;
-  width: 950px;
-  height: 550px;
+  width: 900px;
+  height: 500px;
   background-color: #fff;
-  border-radius: 25px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transition: transform 0.3s ease-in-out;
 }
 
-/* Left Side Panel */
 .auth-left-panel {
   flex: 1;
-  background: linear-gradient(to bottom right, #ff416c, #ff4b2b);
+  background: #ff416c;
   color: #fff;
-  padding: 60px 40px;
+  padding: 50px 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: background 0.4s ease;
 }
 
 .auth-left-panel h2 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
+  font-size: 2rem;
+  margin-bottom: 15px;
 }
 
 .auth-left-panel p {
-  font-size: 1rem;
+  font-size: 0.9rem;
   text-align: center;
-  margin-bottom: 30px;
-  line-height: 1.6;
+  margin-bottom: 20px;
+  line-height: 1.5;
 }
 
 .auth-left-panel button {
-  padding: 12px 30px;
+  padding: 10px 25px;
   border: 2px solid #fff;
   background-color: transparent;
   color: #fff;
-  font-size: 1rem;
-  border-radius: 30px;
+  font-size: 0.9rem;
+  border-radius: 25px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .auth-left-panel button:hover {
@@ -86,45 +64,32 @@
   color: #ff416c;
 }
 
-/* Right Side Panel */
 .auth-right-panel {
   flex: 1;
-  padding: 60px 50px;
+  padding: 50px 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  animation: slideIn 0.6s ease;
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateX(50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
 }
 
 .auth-right-panel h2 {
   text-align: center;
-  font-size: 2rem;
-  margin-bottom: 25px;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
 }
 
 .auth-right-panel form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
 }
 
 .auth-right-panel input {
-  padding: 14px 16px;
-  border-radius: 10px;
+  padding: 12px 14px;
+  border-radius: 8px;
   border: 1px solid #ccc;
-  font-size: 1rem;
-  transition: border 0.3s ease;
+  font-size: 0.9rem;
+  transition: border 0.2s ease;
 }
 
 .auth-right-panel input:focus {
@@ -133,25 +98,24 @@
 }
 
 .auth-right-panel button {
-  padding: 14px;
+  padding: 12px;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   background-color: #ff6a00;
   color: #fff;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.2s ease;
 }
 
 .auth-right-panel button:hover {
   background-color: #e65c00;
 }
 
-/* Message */
 .auth-msg {
-  margin-top: 15px;
-  font-size: 0.9rem;
+  margin-top: 10px;
+  font-size: 0.85rem;
   color: #333;
   text-align: center;
 }

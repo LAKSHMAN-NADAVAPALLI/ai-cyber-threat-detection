@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AuthPage.css';
 
@@ -12,63 +12,43 @@ const AuthPage = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = isLogin ? 'Login | Job Portal' : 'Register | Job Portal';
+    document.title = isLogin ? 'Login | AI CYBER SHIELD' : 'Register | AI CYBER SHIELD';
   }, [isLogin]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
+    setMessage('');
+    setLoading(true);
 
     const endpoint = isLogin
       ? 'https://backend-edwk.onrender.com/api/auth/login'
       : 'https://backend-edwk.onrender.com/api/auth/register';
 
-    const payload = isLogin ? { email, password } : { name, email, password };
-
-    setMessage(''); // Clear previous message
-    setLoading(true);
-
     try {
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(isLogin ? { email, password } : { name, email, password }),
       });
 
-      const headerToken = response.headers.get('authorization')?.split(' ')[1];
-      const text = await response.text();
-
-      let body = {};
-      try {
-        body = JSON.parse(text);
-      } catch {
-        console.warn('⚠️ Could not parse JSON response body');
-      }
+      const token = response.headers.get('authorization')?.split(' ')[1];
+      const body = await response.json().catch(() => ({}));
 
       if (response.ok) {
         if (isLogin) {
-          const token = headerToken || body.token;
-          const role = body.role || 'USER';
-
-          if (token) {
-            localStorage.setItem('token', token);
-            localStorage.setItem('role', role);
-
-            if (onLoginSuccess) onLoginSuccess(role);
-
-            // Navigate only after successful login
-            if (navigate) {
-              navigate('/dashboard');
-            }
+          if (token || body.token) {
+            localStorage.setItem('token', token || body.token);
+            localStorage.setItem('role', body.role || 'USER');
+            if (onLoginSuccess) onLoginSuccess(body.role || 'USER');
+            navigate('/dashboard');
           } else {
             setMessage('❌ Login failed. No token received.');
           }
         } else {
-          // Registration success
           setMessage(body.message || '✅ Registration successful! You can now login.');
-          setIsLogin(true); // Switch to login form after registration
+          setIsLogin(true);
         }
       } else {
-        // Handle server error messages for both login and register
         setMessage(body.message || `❌ ${isLogin ? 'Login' : 'Registration'} failed.`);
       }
     } catch (err) {
@@ -77,7 +57,7 @@ const AuthPage = ({ onLoginSuccess }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [email, password, name, isLogin, navigate, onLoginSuccess]);
 
   return (
     <div className="auth-page">
@@ -89,12 +69,7 @@ const AuthPage = ({ onLoginSuccess }) => {
               ? 'To keep connected with us please login with your personal info.'
               : 'Enter your personal details and start your journey with us.'}
           </p>
-          <button
-            onClick={() => {
-              setMessage('');
-              setIsLogin(!isLogin);
-            }}
-          >
+          <button onClick={() => { setMessage(''); setIsLogin(!isLogin); }}>
             {isLogin ? 'SIGN UP' : 'SIGN IN'}
           </button>
         </div>

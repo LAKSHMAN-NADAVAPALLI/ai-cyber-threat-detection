@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: ai-cyber-threat-detection-backend
+    runtime: docker  # Required for Docker builds
+    plan: free
+    region: oregon  # Optional, adjust if needed
+    dockerfilePath: ./Dockerfile  # Path to your Dockerfile
+
+    envVars:
+      - key: MONGO_URI
+        value: mongodb+srv://LAKSHMAN:LAKSHMAN@cluster0.4unosvn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+      - key: JWT_SECRET
+        value: your_secret_key_here
+
+      - key: PORT
+        value: 8080

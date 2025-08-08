@@ -1,27 +1,26 @@
-/* AdminAuthPage.css */
 .admin-auth-container {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(to right, #141e30, #243b55);
+  background: #1a2a44; /* Simplified */
   font-family: 'Segoe UI', sans-serif;
 }
 
 .admin-auth-card {
+  contain: layout;
   display: flex;
   width: 900px;
   height: 550px;
   background-color: #fff;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Lighter shadow */
 }
 
-/* Left side */
 .admin-auth-left {
   flex: 1;
-  background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
+  background: #203a43;
   color: white;
   padding: 50px 30px;
   display: flex;
@@ -31,27 +30,27 @@
 }
 
 .admin-auth-left h2 {
-  font-size: 2.5rem;
+  font-size: 2rem; /* Slightly smaller */
   font-weight: bold;
   margin-bottom: 15px;
 }
 
 .admin-auth-left p {
-  font-size: 1rem;
+  font-size: 0.9rem;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   line-height: 1.5;
 }
 
 .admin-auth-left button {
-  padding: 10px 30px;
+  padding: 8px 25px;
   border: 2px solid white;
   background: transparent;
   color: white;
-  font-size: 1rem;
-  border-radius: 25px;
+  font-size: 0.9rem;
+  border-radius: 20px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease; /* Faster transition */
 }
 
 .admin-auth-left button:hover {
@@ -59,10 +58,9 @@
   color: #203a43;
 }
 
-/* Right side */
 .admin-auth-right {
   flex: 1;
-  padding: 50px 40px;
+  padding: 40px 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -70,24 +68,24 @@
 
 .admin-auth-right h2 {
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 600;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .admin-auth-right form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
 }
 
 .admin-auth-right input {
-  padding: 12px 15px;
-  border-radius: 10px;
+  padding: 10px;
+  border-radius: 8px;
   border: 1px solid #ccc;
-  font-size: 1rem;
+  font-size: 0.9rem;
   outline: none;
-  transition: border 0.3s ease;
+  transition: border 0.2s ease;
 }
 
 .admin-auth-right input:focus {
@@ -95,15 +93,15 @@
 }
 
 .admin-auth-right button {
-  padding: 12px;
+  padding: 10px;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   background-color: #243b55;
   color: white;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.2s ease;
 }
 
 .admin-auth-right button:hover {
@@ -112,7 +110,7 @@
 
 .admin-auth-message {
   text-align: center;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   color: #e63946;
-  margin-top: 15px;
+  margin-top: 10px;
 }

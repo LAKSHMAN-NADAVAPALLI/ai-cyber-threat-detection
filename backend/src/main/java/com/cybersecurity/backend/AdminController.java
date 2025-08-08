@@ -7,7 +7,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = {"http://localhost:3000","nadavapalli-lakshman-ai-cyber-threat-detection.vercel.app"}) // Adjust for deployment
+@CrossOrigin(
+		  origins = {
+		    "http://localhost:3000",
+		    "https://nadavapalli-lakshman-ai-cyber-threat-detection.vercel.app"
+		  },
+		  allowedHeaders = "*",
+		  exposedHeaders = "Authorization"
+		)
+
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {

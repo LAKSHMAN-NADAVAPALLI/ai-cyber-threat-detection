@@ -40,16 +40,26 @@ const AnalyzePredict = ({ onLogout }) => {
         body: JSON.stringify({ input }),
       });
 
-      const data = await response.json();
+      const text = await response.text(); // Get raw text for logging
+      console.log('📦 Raw response:', text); // Debug log
+
+      let data;
+      try {
+        data = JSON.parse(text); // Attempt to parse JSON
+      } catch (err) {
+        throw new Error(`Invalid JSON response: ${text.slice(0, 100)}...`);
+      }
+
       if (!response.ok || data.error) {
-        throw new Error(data.error || 'Unexpected error from server.');
+        throw new Error(data.error || 'Unexpected server error.');
       }
 
       setResult(data.prediction);
       setThreats(data.found_threats || []);
       setConfidence(data.confidence || null);
+
     } catch (err) {
-      console.error(err);
+      console.error('❌ Analyze error:', err);
       setError(`❌ Failed to analyze threat. ${err.message}`);
     }
 
