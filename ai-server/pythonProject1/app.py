@@ -145,7 +145,8 @@ def predict(current_user):
 
     except Exception as e:
         logging.exception("❌ Error in /predict route")
-        return jsonify({"error": "Internal server error"}), 500
+        return jsonify({"error": str(e)}), 500
+
 
 
 
