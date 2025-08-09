@@ -130,7 +130,7 @@ def predict(current_user):
             "exploit": [r"\bexploit\b", r"\bvulnerability exploited\b"],
             "ransomware": [r"\bransomware\b", r"\bdata encrypted\b"],
             "virus": [r"\bvirus\b", r"\binfected system\b"],
-            "trojan": [r"\btrojan\b", r"\btrojan horse\b"],d
+            "trojan": [r"\btrojan\b", r"\btrojan horse\b"],
             "botnet": [r"\bbotnet\b", r"\bnetwork of bots\b"],
             "backdoor": [r"\bbackdoor\b", r"\bunauthorized access\b"],
             "spyware": [r"\bspyware\b", r"\btracking software\b"],
