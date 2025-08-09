@@ -5,13 +5,7 @@ from dotenv import load_dotenv
 import os, bcrypt, jwt, datetime, logging
 from functools import wraps
 import re
-import logging
-from flask import request, jsonify
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-# Optional: Slack alert function
-import requests
+
 # Load environment variables
 load_dotenv()
 
@@ -19,23 +13,32 @@ app = Flask(__name__)
 CORS(app)
 
 # MongoDB Setup
-client = MongoClient(os.getenv("MONGO_URI"))
-db = client['ai_cyber_threat']  # Database name
-users = db['users']
+try:
+    client = MongoClient(os.getenv("MONGO_URI"))
+    db = client['ai_cyber_threat']
+    users = db['users']
+    print("✅ Connected to MongoDB")
+except Exception as e:
+    print(f"❌ MongoDB Connection Failed: {e}")
 
 # JWT secret
 JWT_SECRET = os.getenv("JWT_SECRET")
+if not JWT_SECRET:
+    raise ValueError("❌ JWT_SECRET not set in environment variables!")
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 
-# Decorator to require JWT authentication
+# JWT authentication decorator
 def token_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         token = None
         if 'Authorization' in request.headers:
-            token = request.headers['Authorization'].split(" ")[1]
+            try:
+                token = request.headers['Authorization'].split(" ")[1]
+            except IndexError:
+                return jsonify({"error": "Invalid Authorization header format"}), 403
 
         if not token:
             return jsonify({"error": "Token is missing!"}), 403
@@ -43,10 +46,14 @@ def token_required(f):
         try:
             data = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
             current_user = users.find_one({"username": data["username"]})
+            if not current_user:
+                return jsonify({"error": "User not found!"}), 404
         except jwt.ExpiredSignatureError:
             return jsonify({"error": "Token has expired!"}), 403
         except jwt.InvalidTokenError:
             return jsonify({"error": "Invalid token!"}), 403
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
         return f(current_user, *args, **kwargs)
 
@@ -54,57 +61,67 @@ def token_required(f):
 
 @app.route('/register', methods=['POST'])
 def register():
-    data = request.get_json()
-    username = data['username']
-    password = data['password'].encode('utf-8')
+    try:
+        data = request.get_json(force=True)
+        username = data.get('username')
+        password = data.get('password')
 
-    if users.find_one({"username": username}):
-        return jsonify({"error": "Username already exists"}), 400
+        if not username or not password:
+            return jsonify({"error": "Username and password are required"}), 400
 
-    hashed = bcrypt.hashpw(password, bcrypt.gensalt())
-    users.insert_one({"username": username, "password": hashed})
-    return jsonify({"message": "User registered successfully"}), 201
+        if users.find_one({"username": username}):
+            return jsonify({"error": "Username already exists"}), 400
+
+        hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        users.insert_one({"username": username, "password": hashed})
+        return jsonify({"message": "User registered successfully"}), 201
+    except Exception as e:
+        logging.exception("Error in /register")
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/login', methods=['POST'])
 def login():
-    data = request.get_json()
-    user = users.find_one({"username": data['username']})
+    try:
+        data = request.get_json(force=True)
+        username = data.get('username')
+        password = data.get('password')
 
-    if not user or not bcrypt.checkpw(data['password'].encode('utf-8'), user['password']):
-        return jsonify({"error": "Invalid credentials"}), 401
+        if not username or not password:
+            return jsonify({"error": "Username and password are required"}), 400
 
-    token = jwt.encode({
-        "username": user['username'],
-        "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=24)
-    }, JWT_SECRET, algorithm="HS256")
+        user = users.find_one({"username": username})
+        if not user or not bcrypt.checkpw(password.encode('utf-8'), user['password']):
+            return jsonify({"error": "Invalid credentials"}), 401
 
-    return jsonify({"token": token})
+        token = jwt.encode({
+            "username": user['username'],
+            "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=24)
+        }, JWT_SECRET, algorithm="HS256")
+
+        return jsonify({"token": token})
+    except Exception as e:
+        logging.exception("Error in /login")
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/test', methods=['GET'])
 def test():
-    return "AI Server is working!"
-
-
-
-
+    return jsonify({"message": "AI Server is working!"})
 
 @app.route('/predict', methods=['POST'])
 @token_required
 def predict(current_user):
-    import re
     logging.info("✅ /predict endpoint hit.")
-
     try:
-        data = request.get_json()
-        logging.info("📦 Data received: %s", data)
+        data = request.get_json(force=True)
+        logging.info(f"📦 Data received: {data}")
 
-        if not data or 'input' not in data:
-            return jsonify({"error": "Missing 'input' field in JSON"}), 400
+        # Accept both "input" and "data" keys
+        user_input = data.get('input') or data.get('data')
+        if not user_input:
+            return jsonify({"error": "Missing 'input' or 'data' field in JSON"}), 400
 
-        user_input = data['input'].lower()
-
+        user_input = user_input.lower()
         cleaned_input = re.sub(r'[^\w\s]', '', user_input)
-        tokens = set(cleaned_input.split())
 
         threat_patterns = {
             "malware": [r"\bmalware\b", r"\bmalicious software\b"],
@@ -113,46 +130,37 @@ def predict(current_user):
             "exploit": [r"\bexploit\b", r"\bvulnerability exploited\b"],
             "ransomware": [r"\bransomware\b", r"\bdata encrypted\b"],
             "virus": [r"\bvirus\b", r"\binfected system\b"],
-            "trojan": [r"\btrojan\b", r"\btrojan horse\b"],
+            "trojan": [r"\btrojan\b", r"\btrojan horse\b"],d
             "botnet": [r"\bbotnet\b", r"\bnetwork of bots\b"],
             "backdoor": [r"\bbackdoor\b", r"\bunauthorized access\b"],
             "spyware": [r"\bspyware\b", r"\btracking software\b"],
             "keylogger": [r"\bkeylogger\b", r"\bkeystroke logger\b"]
         }
 
-        found_threats = []
-
-        for threat, patterns in threat_patterns.items():
-            for pattern in patterns:
-                if re.search(pattern, user_input):
-                    found_threats.append(threat)
-                    break
+        found_threats = [
+            threat for threat, patterns in threat_patterns.items()
+            if any(re.search(pattern, user_input) for pattern in patterns)
+        ]
 
         if found_threats:
             prediction = f"⚠ Potential Threat Detected: {', '.join(set(found_threats))}"
             confidence = round(0.3 + 0.01 * len(found_threats), 2)
         else:
             prediction = "✅ No known threats detected in the input."
-            confidence = round(0.9 + 0.01 * len(found_threats), 2)
-
-        logging.info(f"📊 Prediction: {prediction} | Confidence: {confidence}")
+            confidence = 0.99
 
         return jsonify({
             "prediction": prediction,
-            "found_threats": list(set(found_threats)),
+            "found_threats": found_threats,
             "confidence": confidence
         })
 
     except Exception as e:
-        logging.exception("❌ Error in /predict route")
+        logging.exception("Error in /predict route")
         return jsonify({"error": str(e)}), 500
-
-
-
 
 if __name__ == '__main__':
     print("🔍 Registered Flask routes:")
     for rule in app.url_map.iter_rules():
         print(f"{rule.endpoint}: {rule}")
-
     app.run(port=5000)
