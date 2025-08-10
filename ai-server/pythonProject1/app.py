@@ -10,7 +10,17 @@ import re
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+
+# ✅ CORS setup for your frontend domain
+CORS(app,
+     resources={r"/*": {"origins": [
+         "https://nadavapalli-lakshman-ai-cyber-threat-detection.vercel.app",
+         "https://backend-edwk.onrender.com",
+         "https://nadavapalli-lakshman-ai-cyber-threat-detection.vercel.app",
+         "http://localhost:3000"  # For local development
+     ]}},
+     supports_credentials=True,
+     allow_headers=["Content-Type", "Authorization"])
 
 # MongoDB Setup
 try:
