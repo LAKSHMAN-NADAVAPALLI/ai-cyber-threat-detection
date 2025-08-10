@@ -1,10 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from pymongo import MongoClient
 from dotenv import load_dotenv
-import os, bcrypt, jwt, datetime, logging
+import os, jwt, datetime, logging, re
 from functools import wraps
-import re
 
 # Load environment variables
 load_dotenv()
@@ -16,27 +14,17 @@ CORS(app,
      resources={r"/*": {"origins": [
          "https://nadavapalli-lakshman-ai-cyber-threat-detection.vercel.app",
          "https://backend-edwk.onrender.com",
-         "https://nadavapalli-lakshman-ai-cyber-threat-detection.vercel.app",
-         "http://localhost:3000"  # For local development
+         "http://localhost:3000"
      ]}},
      supports_credentials=True,
      allow_headers=["Content-Type", "Authorization"])
 
-# MongoDB Setup
-try:
-    client = MongoClient(os.getenv("MONGO_URI"))
-    db = client['ai_cyber_threat']
-    users = db['users']
-    print("✅ Connected to MongoDB")
-except Exception as e:
-    print(f"❌ MongoDB Connection Failed: {e}")
-
-# JWT secret
+# JWT secret (must match the secret used in Spring Boot)
 JWT_SECRET = os.getenv("JWT_SECRET")
 if not JWT_SECRET:
     raise ValueError("❌ JWT_SECRET not set in environment variables!")
 
-# Set up logging
+# Logging setup
 logging.basicConfig(level=logging.INFO)
 
 # JWT authentication decorator
@@ -54,10 +42,8 @@ def token_required(f):
             return jsonify({"error": "Token is missing!"}), 403
 
         try:
-            data = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
-            current_user = users.find_one({"username": data["username"]})
-            if not current_user:
-                return jsonify({"error": "User not found!"}), 404
+            # ✅ Verify token — do not check DB, just trust Spring Boot issued it
+            jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
         except jwt.ExpiredSignatureError:
             return jsonify({"error": "Token has expired!"}), 403
         except jwt.InvalidTokenError:
@@ -65,53 +51,9 @@ def token_required(f):
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 
-        return f(current_user, *args, **kwargs)
+        return f(*args, **kwargs)
 
     return decorated_function
-
-@app.route('/register', methods=['POST'])
-def register():
-    try:
-        data = request.get_json(force=True)
-        username = data.get('username')
-        password = data.get('password')
-
-        if not username or not password:
-            return jsonify({"error": "Username and password are required"}), 400
-
-        if users.find_one({"username": username}):
-            return jsonify({"error": "Username already exists"}), 400
-
-        hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-        users.insert_one({"username": username, "password": hashed})
-        return jsonify({"message": "User registered successfully"}), 201
-    except Exception as e:
-        logging.exception("Error in /register")
-        return jsonify({"error": str(e)}), 500
-
-@app.route('/login', methods=['POST'])
-def login():
-    try:
-        data = request.get_json(force=True)
-        username = data.get('username')
-        password = data.get('password')
-
-        if not username or not password:
-            return jsonify({"error": "Username and password are required"}), 400
-
-        user = users.find_one({"username": username})
-        if not user or not bcrypt.checkpw(password.encode('utf-8'), user['password']):
-            return jsonify({"error": "Invalid credentials"}), 401
-
-        token = jwt.encode({
-            "username": user['username'],
-            "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=24)
-        }, JWT_SECRET, algorithm="HS256")
-
-        return jsonify({"token": token})
-    except Exception as e:
-        logging.exception("Error in /login")
-        return jsonify({"error": str(e)}), 500
 
 @app.route('/test', methods=['GET'])
 def test():
@@ -119,7 +61,7 @@ def test():
 
 @app.route('/predict', methods=['POST'])
 @token_required
-def predict(current_user):
+def predict():
     logging.info("✅ /predict endpoint hit.")
     try:
         data = request.get_json(force=True)
